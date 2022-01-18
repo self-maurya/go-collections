@@ -1,10 +1,10 @@
 package go_collections
 
-type List interface {
+type List[V comparable] interface {
 	Collection
-	Get(int) (interface{}, error)
-	Set(int, interface{}) (interface{}, error)
-	IndexOf(interface{}) int
-	LastIndexOf(interface{}) int
-	SubList(int, int) List
+	Get(int) (V, error)
+	Set(int, V) (V, error)
+	IndexOf(V) int
+	LastIndexOf(V) int
+	SubList(int, int) ([]V, error)
 }

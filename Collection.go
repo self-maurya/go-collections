@@ -1,7 +1,6 @@
 package go_collections
 
 type Collection interface {
-	Iterable
 	Size() int
 	IsEmpty() bool
 	Contains(interface{}) bool
