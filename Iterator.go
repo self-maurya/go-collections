@@ -1,7 +1,7 @@
 package go_collections
 
-type Iterator interface {
+type Iterator[V comparable] interface {
 	HasNext() bool
-	Next[V comparable]() V
+	Next() V
 	Remove()
 }

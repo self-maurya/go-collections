@@ -4,6 +4,10 @@ import (
 	"errors"
 )
 
+var (
+	InvalidIndexError = errors.New("invalid index")
+)
+
 type ArrayList[V comparable] struct {
 	elementData []V
 	size        int
@@ -11,20 +15,20 @@ type ArrayList[V comparable] struct {
 }
 
 func (al *ArrayList[V]) Add(value V) {
-	al.elementData = append(al.elementData, value)
+	al.elementData = append([]V(al.elementData), value)
 	al.size++
 }
 
 func (al *ArrayList[V]) Get(index int) (V, error) {
 	if index < 0 || index >= al.size {
-		return al.nilValue, errors.New("invalid index")
+		return al.nilValue, InvalidIndexError
 	}
 	return al.elementData[index], nil
 }
 
 func (al *ArrayList[V]) Set(index int, value V) (V, error) {
 	if index < 0 || index >= al.size {
-		return al.nilValue, errors.New("invalid index")
+		return al.nilValue, InvalidIndexError
 	}
 	oldValue := al.elementData[index]
 	al.elementData[index] = value
@@ -33,23 +37,23 @@ func (al *ArrayList[V]) Set(index int, value V) (V, error) {
 
 func (al *ArrayList[V]) AddAtIndex(index int, value V) error {
 	if index < 0 || index >= al.size {
-		return errors.New("invalid index")
+		return InvalidIndexError
 	}
 	prev := al.elementData[:index]
 	next := al.elementData[index:]
-	al.elementData = append(append(prev, value), next...)
+	al.elementData = append(append([]V(prev), value), next...)
 	al.size++
 	return nil
 }
 
 func (al *ArrayList[V]) Remove(index int) (V, error) {
 	if index < 0 || index >= al.size {
-		return al.nilValue, errors.New("invalid index")
+		return al.nilValue, InvalidIndexError
 	}
 	oldValue := al.elementData[index]
 	prev := al.elementData[:index]
 	next := al.elementData[index+1:]
-	al.elementData = append(prev, next...)
+	al.elementData = append([]V(prev), next...)
 	al.size--
 	return oldValue, nil
 }
@@ -79,13 +83,13 @@ func (al *ArrayList[V]) Clear(value V) int {
 }
 
 func (al *ArrayList[V]) AddAll(value []V) {
-	al.elementData = append(al.elementData, value...)
+	al.elementData = append([]V(al.elementData), value...)
 	al.size += len(value)
 }
 
 func (al *ArrayList[V]) SubList(fromIndex, toIndex int) ([]V, error) {
 	if fromIndex < 0 || toIndex > al.size || fromIndex > toIndex {
-		return nil, errors.New("invalid index")
+		return nil, InvalidIndexError
 	}
 	return al.elementData[fromIndex:toIndex], nil
 }
@@ -104,11 +108,15 @@ func (al *ArrayList[V]) Equals(list *ArrayList[V]) bool {
 
 func (al *ArrayList[V]) RemoveRange(fromIndex, toIndex int) error {
 	if fromIndex < 0 || toIndex > al.size || fromIndex > toIndex {
-		return errors.New("invalid index")
+		return InvalidIndexError
 	}
 	prev := al.elementData[:fromIndex]
 	next := al.elementData[toIndex:]
-	al.elementData = append(prev, next...)
+	al.elementData = append([]V(prev), next...)
 	al.size -= toIndex - fromIndex
 	return nil
+}
+
+func (al *ArrayList[V]) Iterator() []V {
+	return al.elementData
 }
