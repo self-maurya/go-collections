@@ -11,7 +11,7 @@ func TestArrayList_Add(t *testing.T) {
 	al.Add("c")
 	al.Add("d")
 	_ = al.AddAtIndex(1, "b")
-	for _, v := range al.Iterator() {
+	for _, v := range al.ToArray() {
 		fmt.Println(v)
 	}
 }

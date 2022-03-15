@@ -1,11 +1,11 @@
 package src
 
-type Collection interface {
+type Collection[V comparable] interface {
 	Size() int
 	IsEmpty() bool
-	Contains(interface{}) bool
-	ToArray() []interface{}
-	Add(...interface{}) bool
-	Remove(interface{}) bool
+	Contains(V) bool
+	ToArray() []V
+	AddAll([]V)
+	Remove(int) (bool, error)
 	Clear()
 }
