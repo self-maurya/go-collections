@@ -1,4 +1,4 @@
-package src
+package collections
 
 import (
 	"errors"
@@ -12,12 +12,8 @@ type Stack[V comparable] struct {
 	abstractList[V]
 }
 
-func (s *Stack[V]) IsEmpty() bool {
-	return s.size == 0
-}
-
 func (s *Stack[V]) Push(value V) {
-	s.elementData = append(s.elementData, value)
+	s.data = append(s.data, value)
 	s.size++
 }
 
@@ -25,8 +21,8 @@ func (s *Stack[V]) Pop() (V, error) {
 	if s.IsEmpty() {
 		return s.nilValue, StackIsEmpty
 	}
-	top := s.elementData[len(s.elementData)-1]
-	s.elementData = s.elementData[:len(s.elementData)-1]
+	top := s.data[len(s.data)-1]
+	s.data = s.data[:len(s.data)-1]
 	s.size--
 	return top, nil
 }

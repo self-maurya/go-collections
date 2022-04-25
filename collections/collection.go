@@ -1,4 +1,4 @@
-package src
+package collections
 
 type Collection[V comparable] interface {
 	Size() int
@@ -6,6 +6,6 @@ type Collection[V comparable] interface {
 	Contains(V) bool
 	ToArray() []V
 	AddAll([]V)
-	Remove(int) (bool, error)
+	Remove(int) (V, error)
 	Clear()
 }

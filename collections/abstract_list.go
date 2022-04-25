@@ -1,9 +1,9 @@
-package src
+package collections
 
 type abstractList[V comparable] struct {
-	elementData []V
-	size        int
-	nilValue    V
+	data     []V
+	size     int
+	nilValue V
 }
 
 func (al *abstractList[V]) Size() int {
@@ -15,16 +15,16 @@ func (al *abstractList[V]) IsEmpty() bool {
 }
 
 func (al *abstractList[V]) Clear() {
-	al.elementData = nil
+	al.data = nil
 	al.size = 0
 }
 
 func (al *abstractList[V]) ToArray() []V {
-	return al.elementData
+	return al.data
 }
 
 func (al *abstractList[V]) AddAll(value []V) {
-	al.elementData = append(al.elementData, value...)
+	al.data = append(al.data, value...)
 	al.size += len(value)
 }
 
@@ -33,7 +33,7 @@ func (al *abstractList[V]) Equals(list *abstractList[V]) bool {
 		return false
 	}
 	for i := 0; i < al.size; i++ {
-		if list.elementData[i] != al.elementData[i] {
+		if list.data[i] != al.data[i] {
 			return false
 		}
 	}

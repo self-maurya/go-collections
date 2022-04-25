@@ -1,4 +1,4 @@
-package src
+package collections
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 )
 
 func TestArrayList_Add(t *testing.T) {
-	al := &ArrayList[string]{}
+	al := ArrayList[string]{}
 	al.Add("a")
 	al.Add("c")
 	al.Add("d")

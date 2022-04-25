@@ -1,4 +1,4 @@
-package src
+package collections
 
 type List[V comparable] interface {
 	Collection[V]
